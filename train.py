@@ -49,7 +49,8 @@ if __name__ == '__main__':
 
     # 3) 학습 실행
     model.train(
-        data="C:/Users/cho-j/OneDrive/바탕 화면/data2nd/data.yaml",
+        # data="C:/Users/cho-j/OneDrive/바탕 화면/data2nd/data.yaml",
+        data="C:/Users/cho-j/Downloads/3rd/data.yaml",
         epochs=50,
         imgsz=1024,
         batch=-1,         # 60 % VRAM 자동
@@ -64,10 +65,137 @@ if __name__ == '__main__':
         fliplr=0.5,
         translate=0.1, 
         scale=0.5,
-        project="runs/train",
-        name="gb4_exp2",
+        project="runs3/train",
+        name="gb4_exp1",
     )
 
+
+
+
+
+
+
+# import torch
+# import torch.optim as optim
+# import torchvision.transforms as transforms
+# from torch.utils.data import DataLoader
+# from model import YOLOv1
+# from dataset import EcoliDataset
+# from utils import (
+#     non_max_suppression,
+#     mean_average_precision,
+#     intersection_over_union,
+#     cellboxes_to_boxes,
+#     get_bboxes,
+#     plot_image,
+#     save_checkpoint,
+#     load_checkpoint,
+# )
+# from loss import YoloLoss
+# import os
+# from tqdm import tqdm
+# # 자동 혼합 정밀도(AMP)를 위한 도구 import
+# from torch.cuda.amp import GradScaler, autocast
+
+# # Set device
+# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+# # Hyperparameters
+# learning_rate = 2e-5
+# # 배치 사이즈를 4로 수정 (메모리 부족 문제 해결을 위한 최우선 조치)
+# batch_size = 4
+# weight_decay = 0
+# num_epochs = 100
+# num_workers = 2
+# pin_memory = True
+# load_model = False
+# load_model_file = "overfit.pth.tar"
+# img_dir = "Ecoli"
+# label_dir = "Ecoli"
+
+# # Transforms
+# class Compose(object):
+#     def __init__(self, transforms):
+#         self.transforms = transforms
+
+#     def __call__(self, img, bboxes):
+#         for t in self.transforms:
+#             img, bboxes = t(img), bboxes
+#         return img, bboxes
+
+# transform = Compose([transforms.Resize((448, 448)), transforms.ToTensor(),])
+
+# def train_one_epoch(model, optimizer, data_loader, device, epoch, scaler): # scaler 인자 추가
+#     model.train()
+#     loop = tqdm(data_loader, leave=True)
+#     mean_loss = []
+
+#     for batch_idx, (x, y) in enumerate(loop):
+#         x, y = x.to(device), y.to(device)
+
+#         # autocast 컨텍스트 내에서 forward pass 실행
+#         with autocast():
+#             out = model(x)
+#             loss = YoloLoss()(out, y)
+        
+#         mean_loss.append(loss.item())
+        
+#         # 기존 옵티마이저 스텝을 scaler를 사용하도록 수정
+#         optimizer.zero_grad()
+#         scaler.scale(loss).backward()
+#         scaler.step(optimizer)
+#         scaler.update()
+
+#         # update progress bar
+#         loop.set_postfix(loss=loss.item())
+
+#     print(f"Mean loss was {sum(mean_loss)/len(mean_loss)}")
+
+# def main():
+#     model = YOLOv1(split_size=7, num_boxes=2, num_classes=1).to(device)
+#     optimizer = optim.Adam(model.parameters(), lr=learning_rate, weight_decay=weight_decay)
+    
+#     if load_model:
+#         load_checkpoint(torch.load(load_model_file), model, optimizer)
+
+#     train_dataset = EcoliDataset(
+#         csv_file=os.path.join(img_dir, "train.csv"),
+#         transform=transform,
+#         img_dir=img_dir,
+#         label_dir=label_dir,
+#     )
+
+#     train_loader = DataLoader(
+#         dataset=train_dataset,
+#         batch_size=batch_size,
+#         num_workers=num_workers,
+#         pin_memory=pin_memory,
+#         shuffle=True,
+#         drop_last=False,
+#     )
+    
+#     # GradScaler 객체 생성
+#     scaler = GradScaler()
+
+#     for epoch in range(num_epochs):
+#         print(f"--- [EPOCH: {epoch+1} / {num_epochs}] ---")
+        
+#         # train_one_epoch 함수에 scaler 전달
+#         train_one_epoch(model, optimizer, train_loader, device, epoch, scaler)
+        
+#         if (epoch + 1) % 10 == 0:
+#             checkpoint = {
+#                 "state_dict": model.state_dict(),
+#                 "optimizer": optimizer.state_dict(),
+#             }
+#             save_checkpoint(checkpoint, filename=f"checkpoint_epoch_{epoch+1}.pth.tar")
+#             print("==> Checkpoint saved")
+
+# if __name__ == "__main__":
+#     main()
+
+
+        
 # 기대 데이터 확대 배수
 
 # E = 4 × (1 + mixup)
