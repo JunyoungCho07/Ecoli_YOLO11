@@ -212,6 +212,7 @@ images/
 labels/
 predictions/
 predictions2/
+predictions_multiclass/
 runs/
 runs2/
 runs3/

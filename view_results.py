@@ -61,14 +61,14 @@ for filename in os.listdir(folder_path):
             cv2.putText(img_vis, label, (x1, y1 - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
 
         # 시각화
-        plt.figure(figsize=(10, 10))
-        plt.imshow(img_vis)
-        plt.title(f"Prediction: {filename}")
-        plt.axis('off')
-        plt.show()
+        # plt.figure(figsize=(10, 10))
+        # plt.imshow(img_vis)
+        # plt.title(f"Prediction: {filename}")
+        # plt.axis('off')
+        # plt.show()
 
         # 시각화 대신 결과 저장도 가능
-        # output_dir = 'predictions2'
-        # os.makedirs(output_dir, exist_ok=True)
-        # save_path = os.path.join(output_dir, filename)
-        # cv2.imwrite(save_path, cv2.cvtColor(img_vis, cv2.COLOR_RGB2BGR))
+        output_dir = 'predictions2'
+        os.makedirs(output_dir, exist_ok=True)
+        save_path = os.path.join(output_dir, filename)
+        cv2.imwrite(save_path, cv2.cvtColor(img_vis, cv2.COLOR_RGB2BGR))
